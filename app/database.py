@@ -12,16 +12,6 @@ MYSQL_DB=os.getenv("MYSQL_DB")
 MYSQL_HOST=os.getenv("MYSQL_HOST")
 MYSQL_PORT=os.getenv("MYSQL_PORT")
 
-
-#DATABASE_URL = URL.create(
-#    drivername="mysql", 
-#    username=MYSQL_USER, 
-#    password=MYSQL_PASSWORD,   
-#    host=MYSQL_HOST, 
-#    database=MYSQL_DB, 
-#    port=3306
-#    )
-
 DATABASE_URL= f"mysql+pymysql://{MYSQL_USER}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}/{MYSQL_DB}"
 
 engine = create_engine(DATABASE_URL)
