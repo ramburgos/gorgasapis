@@ -1,18 +1,18 @@
-from fastapi import FastAPI,HTTPException,Depends,status
+from fastapi import FastAPI,Depends
 from sqlalchemy import and_, or_ ,select,insert,update,delete,join
-from sqlalchemy.orm import relationship,join,Session
+from sqlalchemy.orm import Session
 import bcrypt 
 import random
 import string
 import datetime
 from pydantic import BaseModel
-from app.gorgasmodels import pagolicencia_choices, tipolicencia_choices,  pagovacacion_choices,quincenas_choices,meses_choices, MotiveLicense, AppUser,Employees,BloodType,CivilStatus,Contracts,ScholarShip,MotivePermission,Permissions,Licenses,Vacations,Journeys,Compensatories
-from app.database import get_db,engine
-from fastapi.middleware.cors import CORSMiddleware
+from gorgasmodels import pagolicencia_choices, tipolicencia_choices,  pagovacacion_choices, quincenas_choices,meses_choices, MotiveLicense, AppUser,Employees,BloodType,CivilStatus,ScholarShip,MotivePermission,Permissions,Licenses,Vacations,Journeys,Compensatories
+from database import get_db
+#from fastapi.middleware.cors import CORSMiddleware
 
 app= FastAPI()
 
-app.add_middleware(CORSMiddleware,allow_origins=origins,allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
+#app.add_middleware(CORSMiddleware,allow_origins=origins,allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
 
 class ItemPermission(BaseModel):
     employee_id:int

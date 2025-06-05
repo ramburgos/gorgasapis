@@ -12,17 +12,15 @@ MYSQL_DB=os.getenv("MYSQL_DB")
 MYSQL_HOST=os.getenv("MYSQL_HOST")
 MYSQL_PORT=os.getenv("MYSQL_PORT")
 
-#DATABASE_URL= os.getenv("DATABASE_URL",)
-#url = URL.create(
+
+#DATABASE_URL = URL.create(
 #    drivername="mysql", 
-#    username="root", 
-##    password="87351910", 
-#    host="localhost", 
-#    database="db_gorgas_crm", 
+#    username=MYSQL_USER, 
+#    password=MYSQL_PASSWORD,   
+#    host=MYSQL_HOST, 
+#    database=MYSQL_DB, 
 #    port=3306
 #    )
-
-
 
 DATABASE_URL= f"mysql+pymysql://{MYSQL_USER}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}/{MYSQL_DB}"
 
