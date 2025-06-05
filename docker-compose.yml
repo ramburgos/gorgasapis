@@ -3,7 +3,7 @@ services:
   web:
     build: .
     ports:
-      - "8089:8089"
+      - "8000:8000"
     volumes:
       - ./app:/app
     environment:
@@ -15,7 +15,7 @@ services:
     #depends_on:
      # - db  
     restart: on-failure
-    command: sh -c "uvicorn main:app --reload --host=0.0.0.0 --port=8089"
+    command: sh -c "uvicorn main:app --reload --host=0.0.0.0 --port=8000"
 
   #db:
   #  image: mysql:8.0      
