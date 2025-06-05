@@ -6,16 +6,12 @@ import random
 import string
 import datetime
 from pydantic import BaseModel
-from models.gorgasmodels import pagolicencia_choices, tipolicencia_choices,  pagovacacion_choices,quincenas_choices,meses_choices, MotiveLicense, AppUser,Employees,BloodType,CivilStatus,Contracts,ScholarShip,MotivePermission,Permissions,Licenses,Vacations,Journeys,Compensatories
-from conexion import get_db,engine
+from app.gorgasmodels import pagolicencia_choices, tipolicencia_choices,  pagovacacion_choices,quincenas_choices,meses_choices, MotiveLicense, AppUser,Employees,BloodType,CivilStatus,Contracts,ScholarShip,MotivePermission,Permissions,Licenses,Vacations,Journeys,Compensatories
+from app.database import get_db,engine
 from fastapi.middleware.cors import CORSMiddleware
 
 app= FastAPI()
 
-origins=[
-    "http://localhost",
-    "htpp://192.168.10.23:8088"
-]
 app.add_middleware(CORSMiddleware,allow_origins=origins,allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
 
 class ItemPermission(BaseModel):
