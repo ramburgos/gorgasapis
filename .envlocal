@@ -3,6 +3,6 @@
 MYSQL_USER = "dbuser25"
 MYSQL_PASSWORD = "dbslave_sigorgas"
 MYSQL_DB = "db_gorgas_crm"
-MYSQL_HOST = "sigorgas-databasesigorgas-3n89yi"
-MYSQL_PORT = 3306
+MYSQL_HOST = "172.31.1.71"
+MYSQL_PORT = 3030
 MYSQL_ROOT_PASSWORD = "dbadmin_sigorgas0480"
