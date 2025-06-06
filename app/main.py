@@ -1,3 +1,4 @@
+import fastapi
 from fastapi import FastAPI,Depends
 from sqlalchemy import and_, or_ ,select,insert,update,delete,join
 from sqlalchemy.orm import Session
