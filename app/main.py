@@ -6,8 +6,8 @@ import random
 import string
 import datetime
 from pydantic import BaseModel
-from .gorgasmodels import pagolicencia_choices, tipolicencia_choices,  pagovacacion_choices, quincenas_choices,meses_choices, MotiveLicense, AppUser,Employees,BloodType,CivilStatus,ScholarShip,MotivePermission,Permissions,Licenses,Vacations,Journeys,Compensatories
-from .database import get_db
+from gorgasmodels import pagolicencia_choices, tipolicencia_choices,  pagovacacion_choices, quincenas_choices,meses_choices, MotiveLicense, AppUser,Employees,BloodType,CivilStatus,ScholarShip,MotivePermission,Permissions,Licenses,Vacations,Journeys,Compensatories
+from database import get_db
 #from fastapi.middleware.cors import CORSMiddleware
 
 app= FastAPI()
