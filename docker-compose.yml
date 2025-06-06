@@ -2,8 +2,8 @@ version: '3.9'
 services:
   web:
     build: .
-    ports:
-      - "8000:8000"
+    #ports:
+    #  - "8089:8000"
     volumes:
       - ./app:/app
     environment:
@@ -15,12 +15,12 @@ services:
     depends_on:
       - db  
     restart: on-failure
-    #command: sh -c "uvicorn main:app --reload --host=0.0.0.0 --port=8000"
+    command: sh -c "uvicorn main:app --reload --host=0.0.0.0 --port=8089"
 
   db:
     image: mysql:8.0      
-    #ports:
-    #  - ":3306"    
+    ports:
+      - ":3306"    
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DB}
