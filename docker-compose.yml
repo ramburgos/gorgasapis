@@ -19,7 +19,7 @@ services:
       - "traefik.http.routers.fastapi.entrypoints=websecure"
       - "traefik.http.routers.fastapi.tls=true"
       - "traefik.http.services.fastapi.loadbalancer.server.port=8089"
-      - "traefik.http.middlewares.fastapi-stripprefix.stripprefix.prefixex=/api/v1"
+      - "traefik.http.middlewares.fastapi-stripprefix.stripprefix.prefixes=/api"
       - "traefik.http.routers.fastapi.rule=Host(`sigorgas-apisgorgas-nqz2rt-0ff1c3-172-31-1-71.traefik.me`) && PathPrefix(`/api`,`/api/docs`,`/api/redoc`,`/api/openapi.json`)"
       
 
