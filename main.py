@@ -9,11 +9,15 @@ from pydantic import BaseModel
 from gorgasmodels import pagolicencia_choices, tipolicencia_choices,  pagovacacion_choices, quincenas_choices,meses_choices, MotiveLicense, AppUser,Employees,BloodType,CivilStatus,ScholarShip,MotivePermission,Permissions,Licenses,Vacations,Journeys,Compensatories
 from database import get_db
 from fastapi.middleware.cors import CORSMiddleware
+import os
+
+root_path= os.getenv("ROOT_PATH","")
 
 app= FastAPI(title="APIs-SIGORGAS",
              version="1.0.0",
-             openapi_url="/openapi.json",
-             docs_url = "/docs",
+             openapi_url=f"{root_path}/openapi.json" if root_path else "/openapi.json",
+             docs_url = f"{root_path}/docs" if root_path else "/docs",
+             root_path=root_path
              )
 
 app.add_middleware(CORSMiddleware,allow_origins=["*"],allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
