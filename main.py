@@ -12,9 +12,9 @@ from fastapi.middleware.cors import CORSMiddleware
 
 app= FastAPI(title="APIs-SIGORGAS",
              version="1.0.0",
-             openapi_url=f"/api/openapi.json",
-             docs_url = f"/api/docs",
-             root_path="/api")
+             openapi_url=f"/api/v1/openapi.json",
+             docs_url = f"/api/v1/docs",
+             root_path="/api/v1")
 
 app.add_middleware(CORSMiddleware,allow_origins=["*"],allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
 
