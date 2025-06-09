@@ -10,8 +10,12 @@ from gorgasmodels import pagolicencia_choices, tipolicencia_choices,  pagovacaci
 from database import get_db
 from fastapi.middleware.cors import CORSMiddleware
 
-#app= FastAPI(title="API-SIGORGAS",openapi_url=f"/openapi.json",docs_url=f"/apis-list")
-app= FastAPI(title="APIs-SIGORGAS",version="1.0.0", root_path="/api/v1", openapi_url=f"/openapi.json",docs_url=f"/apis-list")
+app= FastAPI(title="APIs-SIGORGAS",
+             version="1.0.0",
+             openapi_url=f"/api/openapi.json",
+             docs_url = f"/api/docs",
+             root_path="/api")
+
 app.add_middleware(CORSMiddleware,allow_origins=["*"],allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
 
 class ItemPermission(BaseModel):
