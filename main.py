@@ -8,11 +8,10 @@ import datetime
 from pydantic import BaseModel
 from gorgasmodels import pagolicencia_choices, tipolicencia_choices,  pagovacacion_choices, quincenas_choices,meses_choices, MotiveLicense, AppUser,Employees,BloodType,CivilStatus,ScholarShip,MotivePermission,Permissions,Licenses,Vacations,Journeys,Compensatories
 from database import get_db
-#from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.cors import CORSMiddleware
 
 app= FastAPI()
-
-#app.add_middleware(CORSMiddleware,allow_origins=origins,allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
+app.add_middleware(CORSMiddleware,allow_origins=["*"],allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
 
 class ItemPermission(BaseModel):
     employee_id:int
