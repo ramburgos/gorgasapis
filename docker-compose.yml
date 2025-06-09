@@ -13,6 +13,14 @@ services:
       MYSQL_HOST: ${MYSQL_HOST} 
       MYSQL_PORT: ${MYSQL_PORT} 
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.fastapi.rule = Host(`sigorgas-apisgorgas-nqz2rt-0ff1c3-172-31-1-71.traefik.me`) && PathPrefix(`/api/v1`)"
+      - "traefik.http.routers.fastapi.entrypoints=websecure"
+      - "traefik.http.routers.fastapi.tls=true"
+      - "traefik.http.services.fastapi.loadbalancer.server.port=8089"
+
+
     #depends_on:
     #  - db  
     restart: on-failure
