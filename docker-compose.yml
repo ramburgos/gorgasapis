@@ -6,23 +6,22 @@ services:
       - "8000:8000"
     volumes:
       - ./app:/app
-    env_file:
-      - .env  
     environment:
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_DB: ${MYSQL_DB}
-      MYSQL_HOST: ${MYSQL_HOST}
-      MYSQL_PORT: ${MYSQL_PORT}
-  #   depends_on:
-  #    - db  
+      MYSQL_HOST: ${MYSQL_HOST} 
+      MYSQL_PORT: ${MYSQL_PORT} 
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    #depends_on:
+    #  - db  
     restart: on-failure
     command: sh -c "uvicorn main:app --reload --host=0.0.0.0 --port=8000"
 
   #db:
   #  image: mysql:8.0      
-  #  ports:
-  #    - ":3306"    
+    #ports:
+    #  - "3030"      
   #  environment:
   #    MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
   #    MYSQL_DATABASE: ${MYSQL_DB}
