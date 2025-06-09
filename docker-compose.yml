@@ -5,7 +5,7 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./app:/app
+      - .:/app
     environment:
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
@@ -21,7 +21,7 @@ services:
   db:
   #  image: mysql:8.0      
     #ports:
-    #  - "3030"      
+    #  - "3306:3030"      
   #  environment:
   #    MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
   #    MYSQL_DATABASE: ${MYSQL_DB}
