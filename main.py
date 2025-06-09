@@ -10,7 +10,7 @@ from gorgasmodels import pagolicencia_choices, tipolicencia_choices,  pagovacaci
 from database import get_db
 from fastapi.middleware.cors import CORSMiddleware
 
-app= FastAPI(title="API-SIGORGAS",root_path=f"/api/v1")
+app= FastAPI(title="API-SIGORGAS",openapi_url=f"/openapi.json",docs_url=f"/apis-list")
 #app= FastAPI(title="API-SIGORGAS",root_path="/api/v1", openapi_url=f"/api/v1/openapi.json",docs_url=f"/api/v1/apis-list")
 app.add_middleware(CORSMiddleware,allow_origins=["*"],allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
 
@@ -95,7 +95,7 @@ async def root():
     return
 
 ##################### verificación de correo electronico
-@app.get("/api/v1/verificarcorreo/{email}", description="Verificar Correo Usuario para poder registralo")
+@app.get("/verificarcorreo/{email}", description="Verificar Correo Usuario para poder registralo")
 async def verificarcorreo (email:str, db: Session = Depends(get_db)):
     empleado_query= db.query(Employees).filter( or_(Employees.email==email, Employees.email_inst==email)).first()
     if empleado_query:
@@ -104,7 +104,7 @@ async def verificarcorreo (email:str, db: Session = Depends(get_db)):
         return {"estado":"Failed", "mensaje": "El correo no esta registrado"}
 
 ##################### verificación existencia de usuario    
-@app.get("/api/v1/verificarusuario/{idempleado}", description="Verificar Usuario para poder agregarlo")
+@app.get("/verificarusuario/{idempleado}", description="Verificar Usuario para poder agregarlo")
 async def verificarusuario (idempleado:int,db: Session = Depends(get_db)):
     usuario_query= db.query(AppUser).filter_by(employee_id=idempleado).first()
     if usuario_query:
@@ -113,7 +113,7 @@ async def verificarusuario (idempleado:int,db: Session = Depends(get_db)):
         return {"estado":"Failed", "mensaje":"El usuario no esta registrado"}
     
 ##################### enviardatossmtp    
-@app.get("/api/v1/datossmtp", description="enviar datos smtp")
+@app.get("/datossmtp", description="enviar datos smtp")
 async def datossmtp():
     datos = {"smtp_server":"smtp.gmail.com","sender_email": "notificaciones@gorgas.gob.pa","password": "nlkfxgmqqmzlhsot",}
            # return {"estado":"Success","mensaje":"Bienvenido "+ result[1] + ' ' + result[2], "datos":datos}
@@ -122,7 +122,7 @@ async def datossmtp():
     
 
 #################### registrar usuario y asignar password    
-@app.post("/api/v1/registrarusuario/{idempleado}", description="Agregar o Registrar Usuario y enviar correo con su nueva contraseña")
+@app.post("/registrarusuario/{idempleado}", description="Agregar o Registrar Usuario y enviar correo con su nueva contraseña")
 async def registrarusuario (idempleado:int,db: Session = Depends(get_db)):
     all_character= string.ascii_letters+string.digits+string.ascii_uppercase
     largopassword=6
@@ -143,7 +143,7 @@ async def registrarusuario (idempleado:int,db: Session = Depends(get_db)):
 ########################## VALIDAR USUARIO PARA INICIAR SESION
 ##########################
 
-@app.get("/api/v1/validarusuario/{email}/{password}", description="Validación de Usuario")
+@app.get("/validarusuario/{email}/{password}", description="Validación de Usuario")
 async def validarusuario (email:str,password:str,db: Session = Depends(get_db)):
     query = db.execute(select(AppUser.id, AppUser.employee_id, Employees.nombre1, Employees.apellido1,AppUser.password,Employees.foto).join(Employees,AppUser.employee_id == Employees.employee_id).where(or_(Employees.email == email, Employees.email_inst == email))).first()
     if not query:
@@ -158,7 +158,7 @@ async def validarusuario (email:str,password:str,db: Session = Depends(get_db)):
             return {"estado":"Success","mensaje":"Bienvenido "+ result[2] + ' ' + result[3], "datos":datos}
 
 ########################## obtener generales ############################################
-@app.get("/api/v1/perfil/{idempleado}", description="Datos de perfil del empleado")
+@app.get("/perfil/{idempleado}", description="Datos de perfil del empleado")
 async def perfil (idempleado:int,db: Session = Depends(get_db)):
     subqueryescolaridad=select(ScholarShip.descripcion).where(Employees.scholarship_id == ScholarShip.scholarship_id).scalar_subquery()
     subquerytiposangre=select(BloodType.descripcion).where(Employees.bloodtype_id == BloodType.bloodtype_id).scalar_subquery()
@@ -173,7 +173,7 @@ async def perfil (idempleado:int,db: Session = Depends(get_db)):
        
 
 ########################## obtener generales ############################################
-@app.get("/api/v1/empleados/", description="Mostrar todos los empleados")
+@app.get("/empleados/", description="Mostrar todos los empleados")
 async def empleados (db: Session = Depends(get_db)):
     #subqueryescolaridad=select(ScholarShip.descripcion).where(Employees.scholarship_id == ScholarShip.scholarship_id).scalar_subquery()
     #subquerytiposangre=select(BloodType.descripcion).where(Employees.bloodtype_id == BloodType.bloodtype_id).scalar_subquery()
@@ -195,7 +195,7 @@ async def empleados (db: Session = Depends(get_db)):
 #########################################################################################################################################
 ########################### MARCACIONES HISTORIAL
 ###########################
-@app.get("/api/v1/marcaciones/historial/{idempleado}/{desde}/{hasta}", description="Historial de Marcaciones")
+@app.get("/marcaciones/historial/{idempleado}/{desde}/{hasta}", description="Historial de Marcaciones")
 async def marcaciones_historial (idempleado:int,desde:str,hasta:str, db:Session = Depends(get_db)):
     query = db.execute(select(AppUser.employee_id,Employees.nombre1,Employees.apellido1,AppUser.password).join(Employees,AppUser.employee_id == Employees.employee_id).where(or_(Employees.email == email, Employees.email_inst == email))).first()
     #if not query:
@@ -214,7 +214,7 @@ async def marcaciones_historial (idempleado:int,desde:str,hasta:str, db:Session 
 #############################################################################################################################################
 ########################### PERMISOS HISTORIAL 
 ###########################
-@app.get("/api/v1/permisos/historial/{idempleado}", description="Historial de Permisos")
+@app.get("/permisos/historial/{idempleado}", description="Historial de Permisos")
 async def permisos_historial (idempleado:int, db: Session = Depends(get_db)):
     subquerymotivo=select(MotivePermission.descripcion).where(Permissions.motivepermission_id == MotivePermission.motivepermission_id).scalar_subquery()
     query=  db.execute(select(Permissions.permissions_id,Permissions.employee_id, Permissions.fechadesde, Permissions.horadesde, Permissions.fechahasta, Permissions.horahasta, Permissions.horastomadas,subquerymotivo.label("motivo")).where(Permissions.employee_id == idempleado)).all()
@@ -227,7 +227,7 @@ async def permisos_historial (idempleado:int, db: Session = Depends(get_db)):
 ###########################    
 ########################### PERMISOS GUARDAR
 ########################### 
-@app.post("/api/v1/permisos/guardar/", description="Guardar Permiso")
+@app.post("/permisos/guardar/", description="Guardar Permiso")
 async def permisos_guardar (item:ItemPermission, db: Session = Depends(get_db)):
     query =db.execute(insert(Permissions).values(employee_id=item.employee_id,
                         contracts_id=item.contracts_id,
@@ -252,28 +252,28 @@ async def permisos_guardar (item:ItemPermission, db: Session = Depends(get_db)):
 ###########################
 ########################### PERMISOS EDITAR
 ###########################
-@app.post("/api/v1/permisos/editar/{idpermiso}", description="Editar permiso")
+@app.post("/permisos/editar/{idpermiso}", description="Editar permiso")
 async def permisos_editar (idpermiso:int):
     return {"estado":"Success","mensaje":"En Construccion"}
     
 ###########################
 ########################### PERMISOS EDITAR
 ###########################
-@app.post("/api/v1/permisos/eliminar/{idpermiso}", description="Eliminar permiso")
+@app.post("/permisos/eliminar/{idpermiso}", description="Eliminar permiso")
 async def permisos_eliminar (idpermiso:int):
     return {"estado":"Success","mensaje":"En Construccion"}
 
 ###########################
 ########################### PERMISOS ADJUNTAR
 ###########################
-@app.post("/api/v1/permisos/adjuntar/{idpermiso}", description="Adjuntar archivos a permiso")
+@app.post("/permisos/adjuntar/{idpermiso}", description="Adjuntar archivos a permiso")
 async def permisos_adjuntar (idpermiso:int):
     return {"estado":"Success","mensaje":"En Construccion"}
     
 ###########################
 ########################### PERMISOS IMPRIMIR
 ###########################
-@app.post("/api/v1/permisos/imprimir/{idpermiso}", description="Impresión de permiso")
+@app.post("/permisos/imprimir/{idpermiso}", description="Impresión de permiso")
 async def permisos_imprimir (idpermiso:int):
     return {"estado":"Success","mensaje":"En Construccion"}
     
@@ -281,7 +281,7 @@ async def permisos_imprimir (idpermiso:int):
 #################################################################################################################################
 ########################### VACACIONES HISTORIAL 
 ###########################
-@app.get("/api/v1/vacaciones/historial/{idempleado}", description="Historial de vacaciones")
+@app.get("/vacaciones/historial/{idempleado}", description="Historial de vacaciones")
 async def vacaciones_historial (idempleado:int, db: Session = Depends(get_db)):
     query=  db.execute(select(Vacations.vacations_id,Vacations.employee_id, Vacations.tomardesde, Vacations.tomarhasta,Vacations.fechareintegrosolicitud,Vacations.diasatomar,Vacations.pagovacacion).where(Vacations.employee_id == idempleado)).all()
     if not query:
@@ -293,7 +293,7 @@ async def vacaciones_historial (idempleado:int, db: Session = Depends(get_db)):
 ###########################    
 ########################### VACACIONES GUARDAR 
 ###########################
-@app.post("/api/v1/vacaciones/guardar/", description="Guardar Vacaciones")
+@app.post("/vacaciones/guardar/", description="Guardar Vacaciones")
 async def vacaciones_guardar (item:ItemVacations, db: Session = Depends(get_db)):
     query =db.execute(insert(Vacations).values(employee_id=item.employee_id,
                         contracts_id=item.contracts_id,
@@ -323,7 +323,7 @@ async def vacaciones_guardar (item:ItemVacations, db: Session = Depends(get_db))
 #################################################################################################################################
 ########################### LICENCIAS HISTORIAL 
 ###########################
-@app.get("/api/v1/licencias/historial/{idempleado}", description="Historial de licencias")
+@app.get("/licencias/historial/{idempleado}", description="Historial de licencias")
 async def licencias_historial (idempleado:int, db: Session = Depends(get_db)):
     subquerymotivo=select(MotiveLicense.descripcion).where(Licenses.motivelicense_id == MotiveLicense.motivelicense_id).scalar_subquery()
     query=  db.execute(select(Licenses.licenses_id,Licenses.employee_id, Licenses.fechadesde,Licenses.fechahasta,Licenses.diasportomar,Licenses.tipo,subquerymotivo.label("motivo"), Licenses.pagolicencia).where(Licenses.employee_id == idempleado)).all()
@@ -336,7 +336,7 @@ async def licencias_historial (idempleado:int, db: Session = Depends(get_db)):
 ###########################    
 ########################### LICENCIAS GUARDAR 
 ###########################
-@app.post("/api/v1/licencias/guardar/", description="Guardar Licencias")
+@app.post("/licencias/guardar/", description="Guardar Licencias")
 async def licencias_guardar (item:ItemLicenses, db: Session = Depends(get_db)):
     query =db.execute(insert(Licenses).values(employee_id=item.employee_id,
                         contracts_id=item.contracts_id,
@@ -363,7 +363,7 @@ async def licencias_guardar (item:ItemLicenses, db: Session = Depends(get_db)):
 #################################################################################################################################
 ########################### JORNADAS HISTORIAL 
 ###########################
-@app.get("/api/v1/jornadas/historial/{idempleado}", description="Historial de Jornadas")
+@app.get("/jornadas/historial/{idempleado}", description="Historial de Jornadas")
 async def jornadas_historial (idempleado:int, db: Session = Depends(get_db)):
     query=  db.execute(select(Journeys.journeys_id,Journeys.employee_id, Journeys.fechadesde, Journeys.fechahasta, Journeys.horaspreviasentrada, Journeys.observacion).where(Journeys.employee_id == idempleado)).all()
     if not query:
@@ -375,7 +375,7 @@ async def jornadas_historial (idempleado:int, db: Session = Depends(get_db)):
 ###########################    
 ########################### JORNADAS GUARDAR 
 ###########################
-@app.post("/api/v1/jornadas/guardar/", description="Guardar Jornadas")
+@app.post("/jornadas/guardar/", description="Guardar Jornadas")
 async def jornadas_guardar (item:ItemJourneys, db: Session = Depends(get_db)):
     query =db.execute(insert(Journeys).values(employee_id=item.employee_id,
                         contracts_id=item.contracts_id,
@@ -397,7 +397,7 @@ async def jornadas_guardar (item:ItemJourneys, db: Session = Depends(get_db)):
 #################################################################################################################################
 ########################### COMPENSATORIOS HISTORIAL 
 ###########################
-@app.get("/api/v1/compensatorios/historial/{idempleado}", description="Historial de Compensatorios")
+@app.get("/compensatorios/historial/{idempleado}", description="Historial de Compensatorios")
 async def compensatorios_historial (idempleado:int, db: Session = Depends(get_db)):
     query=  db.execute(select(Compensatories.compensatories_id,Compensatories.employee_id, Compensatories.fechadesde,Compensatories.horadesde,Compensatories.fechahasta, Compensatories.horahasta,Compensatories.horastotales).where(Compensatories.employee_id == idempleado)).all()
     if not query:
@@ -409,7 +409,7 @@ async def compensatorios_historial (idempleado:int, db: Session = Depends(get_db
 ###########################    
 ########################### COMPENSATORIOS GUARDAR 
 ###########################
-@app.post("/api/v1/compensatorios/guardar/", description="Guardar Compensatorios")
+@app.post("/compensatorios/guardar/", description="Guardar Compensatorios")
 async def compensatorios_guardar (item:ItemCompensatories, db: Session = Depends(get_db)):
     query =db.execute(insert(Compensatories).values(employee_id=item.employee_id,
                         contracts_id=item.contracts_id,
