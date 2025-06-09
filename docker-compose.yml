@@ -20,15 +20,11 @@ services:
     #  - "traefik.http.middlewares.fastapi-stripprefix.stripprefix.prefixes=/api"
     #  - "traefik.http.routers.fastapi.rule=Host(`sigorgas-apisgorgas-nqz2rt-0ff1c3-172-31-1-71.traefik.me`) && PathPrefix(`/api`,`/docs`,`/redoc`,`/api/openapi.json`)"
       
-
-
     #depends_on:
     #  - db  
     restart: on-failure
     command: sh -c "uvicorn main:app --reload --host=0.0.0.0 --port=8089"
   
-  networks:
-    -web
   #db:
   #  image: mysql:8.0      
     #ports:
