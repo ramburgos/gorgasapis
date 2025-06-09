@@ -10,7 +10,7 @@ from gorgasmodels import pagolicencia_choices, tipolicencia_choices,  pagovacaci
 from database import get_db
 from fastapi.middleware.cors import CORSMiddleware
 
-app= FastAPI()
+app= FastAPI(titlt="API-SIGORGAS",openapi_url=f"/openapi.json",docs_url=f"/apis-list")
 app.add_middleware(CORSMiddleware,allow_origins=["*"],allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
 
 class ItemPermission(BaseModel):
@@ -430,7 +430,4 @@ async def compensatorios_guardar (item:ItemCompensatories, db: Session = Depends
         return {"estado":"Failed", "mensaje":"Retistro T. Compensatorio no guardado."}
     
 
-#if __name__== "__main__":
-#    import uvicorn
-#    uvicorn.run(app, host="0.0.0.0", port=8089)
             
