@@ -15,12 +15,10 @@ services:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.fastapi.rule=Host(`sigorgas-apisgorgas-nqz2rt-0ff1c3-172-31-1-71.traefik.me`) && PathPrefix(`/api/v1`)"
-      - "traefik.http.routers.fastapi.entrypoints=websecure"
-      - "traefik.http.routers.fastapi.tls=true"
+      - "traefik.http.routers.fastapi.rule=Host(`sigorgas-apisgorgas-nqz2rt-0ff1c3-172-31-1-71.traefik.me`) && PathPrefix(`/api`)"
       - "traefik.http.services.fastapi.loadbalancer.server.port=8089"
-      - "traefik.http.middlewares.fastapi-stripprefix.stripprefix.prefixes=/api/v1"
-      - "traefik.http.routers.fastapi.rule=Host(`sigorgas-apisgorgas-nqz2rt-0ff1c3-172-31-1-71.traefik.me`) && PathPrefix(`/api/v1`,`/api/v1/docs`,`/api/v1/redoc`,`/api/v1/openapi.json`)"
+      - "traefik.http.middlewares.fastapi-stripprefix.stripprefix.prefixes=/api"
+      - "traefik.http.routers.fastapi.rule=Host(`sigorgas-apisgorgas-nqz2rt-0ff1c3-172-31-1-71.traefik.me`) && PathPrefix(`/api`,`/docs`,`/redoc`,`/api/openapi.json`)"
       
 
 
