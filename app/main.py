@@ -431,5 +431,7 @@ async def compensatorios_guardar (item:ItemCompensatories, db: Session = Depends
         return {"estado":"Failed", "mensaje":"Retistro T. Compensatorio no guardado."}
     
 
-
+if __name__== "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
             
