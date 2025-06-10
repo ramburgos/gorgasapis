@@ -15,7 +15,7 @@ services:
       #MYSQL_HOST: ${MYSQL_HOST} 
       #MYSQL_PORT: ${MYSQL_PORT} 
       #MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      DATABASE_URL: postgresql://dbuser25:dbslave_sigorgas@sigorgas-databasesigorgas-3n89yi:3306/db_gorgas_crm
+      DATABASE_URL: postgresql://dbuser25:dbslave_sigorgas@db:3306/db_gorgas_crm
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.fastapi.rule=Host(`sigorgas-apisgorgas-nqz2rt-0ff1c3-172-31-1-71.traefik.me`) && PathPrefix(`/api`)"
