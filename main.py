@@ -131,7 +131,7 @@ async def datossmtp():
 
 #################### registrar usuario y asignar password    
 @app.post("/registrarusuario/{idempleado}", description="Agregar o Registrar Usuario y enviar correo con su nueva contraseña")
-async def registrarusuario (idempleado:int,db: Session = Depends(get_db)):
+async def registrarusuario (idempleado:int,db:Session = Depends(get_db)):
     all_character= string.ascii_letters+string.digits+string.ascii_uppercase
     largopassword=6
     passwordrandom= ''.join(random.choices(all_character,k=largopassword)).encode('utf8')
@@ -152,7 +152,7 @@ async def registrarusuario (idempleado:int,db: Session = Depends(get_db)):
 ##########################
 
 @app.get("/validarusuario/{email}/{password}", description="Validación de Usuario")
-async def validarusuario (email:str,password:str,db: Session = Depends(get_db)):
+async def validarusuario (email:str,password:str,db:Session = Depends(get_db)):
     query = db.execute(select(AppUser.id, AppUser.employee_id, Employees.nombre1, Employees.apellido1,AppUser.password,Employees.foto).join(Employees,AppUser.employee_id == Employees.employee_id).where(or_(Employees.email == email, Employees.email_inst == email))).first()
     if not query:
         return {"estado":"Failed","mensaje":"Las credenciales son inválidas"}    
