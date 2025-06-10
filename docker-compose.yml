@@ -9,12 +9,13 @@ services:
       
     # se setea si la conexion es remota es decir fuera de contenedor
     environment:
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_DB: ${MYSQL_DB}
-      MYSQL_HOST: ${MYSQL_HOST} 
-      MYSQL_PORT: ${MYSQL_PORT} 
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      #MYSQL_USER: ${MYSQL_USER}
+      #MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      #MYSQL_DB: ${MYSQL_DB}
+      #MYSQL_HOST: ${MYSQL_HOST} 
+      #MYSQL_PORT: ${MYSQL_PORT} 
+      #MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      DATABASE_URL: postgresql://dbuser25:dbslave_sigorgas@sigorgas-databasesigorgas-3n89yi:3306/db_gorgas_crm
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.fastapi.rule=Host(`sigorgas-apisgorgas-nqz2rt-0ff1c3-172-31-1-71.traefik.me`) && PathPrefix(`/api`)"
@@ -32,13 +33,15 @@ services:
     ports:
       - "3306:3306"      
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DB: ${MYSQL_DB}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD} 
+      MYSQL_ROOT_PASSWORD: "dbadmin_sigorgas0480" #${MYSQL_ROOT_PASSWORD}
+      MYSQL_DB: "db_gorgas_crm" #${MYSQL_DB}
+      MYSQL_USER: "dbuser25" #${MYSQL_USER}
+      MYSQL_PASSWORD: "dbslave_sigorgas" #${MYSQL_PASSWORD} 
     volumes:
       - db_data:/var/lib/mysql
     restart: always
+    networks:
+      - app_network 
 
 volumes:
   db_data: #define volumes
