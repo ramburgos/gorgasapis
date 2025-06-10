@@ -9,13 +9,7 @@ services:
       
     # se setea si la conexion es remota es decir fuera de contenedor
     environment:
-      MYSQL_USER: "dbuser25"
-      MYSQL_PASSWORD: "dbslave_sigorgas" 
-      MYSQL_DB: "db_gorgas_crm"
-      MYSQL_HOST: "sigorgas-databasesigorgas-3n89yi"
-      MYSQL_PORT: 3306
-
-      #DATABASE_URL: mysql+pymysql://dbuser25:dbslave_sigorgas@sigorgas-databasesigorgas-3n89yi:3306/db_gorgas_crm
+      DATABASE_URL: mysql+pymysql://dbuser25:dbslave_sigorgas@sigorgas-databasesigorgas-3n89yi:3306/db_gorgas_crm
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.fastapi.rule=Host(`sigorgas-apisgorgas-nqz2rt-0ff1c3-172-31-1-71.traefik.me`) && PathPrefix(`/api`)"
