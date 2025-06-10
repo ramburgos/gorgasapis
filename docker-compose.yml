@@ -19,25 +19,25 @@ services:
       - "traefik.http.routers.fastapi.middlewares=fastapi-stripprefix@docker"
       - "traefik.http.services.fastapi.loadbalancer.server.port=8089"
       - "traefik.http.middlewares.fastapi-stripprefix.stripprefix.prefixes=/api"
-      - "traefik.http.routers.fastapi.rule=Host(`sigorgas-apisgorgas-nqz2rt-0ff1c3-172-31-1-71.traefik.me`) && PathPrefix(`/api`,`/api/docs`,`/api/redoc`,`/api/openapi.json`)"
+      - "traefik.http.routers.fastapi.rule=Host(`sigorgas-apisgorgas-nqz2rt-0ff1c3-172-31-1-71.traefik.me`) && PathPrefix(`/api`,`/docs`,`/redoc`,`/openapi.json`)"
       
-    #depends_on:
-    #  - db  
+    depends_on:
+      - db  
     restart: on-failure
     command: sh -c "uvicorn main:app --reload --host=0.0.0.0 --port=8089"
   
-  #db:
-  #  image: mysql:8.0      
-    #ports:
-    #  - "3306:3030"      
-  #  environment:
-  #    MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-  #    MYSQL_DATABASE: ${MYSQL_DB}
-  #    MYSQL_USER: ${MYSQL_USER}
-  #    MYSQL_PASSWORD: ${MYSQL_PASSWORD} 
-  #  volumes:
-  #    - db_data:/var/lib/mysql
-  #  restart: always
+  db:
+    image: mysql:8.0      
+    ports:
+      - "3306"      
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DB: ${MYSQL_DB}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD} 
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
 
-#volumes:
-#  db_data: #define volumes
+volumes:
+  db_data: #define volumes

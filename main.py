@@ -181,7 +181,7 @@ async def perfil (idempleado:int,db: Session = Depends(get_db)):
        
 
 ########################## obtener generales ############################################
-@app.get("/api/empleados/", description="Mostrar todos los empleados")
+@app.get("/empleados/", description="Mostrar todos los empleados")
 async def empleados (db: Session = Depends(get_db)):
     #subqueryescolaridad=select(ScholarShip.descripcion).where(Employees.scholarship_id == ScholarShip.scholarship_id).scalar_subquery()
     #subquerytiposangre=select(BloodType.descripcion).where(Employees.bloodtype_id == BloodType.bloodtype_id).scalar_subquery()
