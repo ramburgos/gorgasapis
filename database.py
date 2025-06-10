@@ -12,7 +12,7 @@ load_dotenv()
 #MYSQL_HOST=os.getenv("MYSQL_HOST")
 #MYSQL_PORT=int(os.getenv("MYSQL_PORT",3306))
 
-DATABASE_URL = os.getenv("DATABASE_URL", "mysql+pymysql://dbuser25:dbslave_sigorgas@db:3306/db_gorgas_crm")
+DATABASE_URL = os.getenv("DATABASE_URL", "mysql+pymysql://dbuser25:dbslave_sigorgas@sigorgas-databasesigorgas-3n89yi:3306/db_gorgas_crm")
 # DATABASE_URL= f"mysql+pymysql://{MYSQL_USER}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}/{MYSQL_DB}"
 
 engine = create_engine(DATABASE_URL)
