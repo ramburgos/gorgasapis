@@ -6,13 +6,14 @@ services:
       - "8089:8089"
     volumes:
       - .:/app
-    environment:
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_DB: ${MYSQL_DB}
-      MYSQL_HOST: ${MYSQL_HOST} 
-      MYSQL_PORT: ${MYSQL_PORT} 
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    # se setea si la conexion es remota es decir fuera de contenedor
+    #environment:
+    #  MYSQL_USER: ${MYSQL_USER}
+    #  MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    #  MYSQL_DB: ${MYSQL_DB}
+    #  MYSQL_HOST: ${MYSQL_HOST} 
+    #  MYSQL_PORT: ${MYSQL_PORT} 
+    #  MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.fastapi.rule=Host(`sigorgas-apisgorgas-nqz2rt-0ff1c3-172-31-1-71.traefik.me`) && PathPrefix(`/api`)"
@@ -24,16 +25,16 @@ services:
     restart: on-failure
     command: sh -c "uvicorn main:app --reload --host=0.0.0.0 --port=8089"
   
+  #se setea si es interna es decir dentro del contenedor
   db:
     image: mysql:8.0      
     ports:
       - "3306:3306"      
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DB}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_HOST: ${MYSQL_HOST} 
+      MYSQL_ROOT_PASSWORD: "dbadmin_sigorgas0480"  #${MYSQL_ROOT_PASSWORD}
+      MYSQL_DB: "db_gorgas_crm" #${MYSQL_DB}
+      MYSQL_USER: "dbuser25" #${MYSQL_USER}
+      MYSQL_PASSWORD: "dbslave_sigorgas" #${MYSQL_PASSWORD} 
     volumes:
       - db_data:/var/lib/mysql
     restart: always
