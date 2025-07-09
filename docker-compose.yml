@@ -6,26 +6,26 @@ services:
       - "8089:8089"
     volumes:
       - .:/app
-      
+
     # se setea si la conexion es remota es decir fuera de contenedor
-    environment:
-      DATABASE_URL: mysql+pymysql://dbuser25:dbslave_sigorgas@sigorgas-databasesigorgas-3n89yi:3306/db_gorgas_crm
+    #environment:
+    #  DATABASE_URL: mysql+pymysql://dbuser25:dbslave_sigorgas@sigorgas-databasesigorgas-3n89yi:3306/db_gorgas_crm
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.fastapi.rule=Host(`sigorgas-apisgorgas-nqz2rt-0ff1c3-172-31-1-71.traefik.me`) && PathPrefix(`/api`)"
       - "traefik.http.routers.fastapi.middlewares=fastapi-stripprefix@docker"
       - "traefik.http.services.fastapi.loadbalancer.server.port=8089"
-      - "traefik.http.middlewares.fastapi-stripprefix.stripprefix.prefixes=/api" 
+      - "traefik.http.middlewares.fastapi-stripprefix.stripprefix.prefixes=/api"
     depends_on:
-      - db  
+      - db
     restart: on-failure
     command: sh -c "uvicorn main:app --reload --host=0.0.0.0 --port=8089"
-  
+
   #se setea si es interna es decir dentro del contenedor
   db:
-    image: mysql:8.0      
+    image: mysql:8.0
     ports:
-      - "3306:3306"      
+      - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: "dbadmin_sigorgas0480"
       MYSQL_DB: "db_gorgas_crm"
@@ -35,7 +35,7 @@ services:
       - db_data:/var/lib/mysql
     restart: always
     networks:
-      - app_network 
+      - app_network
 
 volumes:
   db_data: #define volumes
